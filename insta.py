@@ -9,9 +9,7 @@ from bson.objectid import ObjectId
 # from bson.dbref import DBRef
 from werkzeug import secure_filename
 from functools import wraps
-# from helpers import *
 import re
-# from jinja2 import Environment
 
 app = Flask(__name__)
 app.secret_key = 'ouFUu-erv/r?reRBGrn/Ur83-64+j!C4nN<#8)vjnss-btr-eDA6'
@@ -87,11 +85,6 @@ def update_profile(fio, name, about, mail):
         col.update_many({'author.name': session['username']}, {
             '$set': {'author.name' : name.lower()}
         })
-    # followers = get_following(name, 'followers')
-    # followers  = list(followers)
-    # print(followers)
-    # col.update_one({'name': {'$in': followers}}, {'$set': { "following.$" : name }
-    #   })
 
 def follow(username):
     col = get_user_collection()
@@ -159,15 +152,8 @@ def format_datetime(value, format='medium'):
     elif format == 'medium':
         format="%d %B %Y"
     elif format == 'delta':
-    	format="%d"
     	delta = datetime.now() - value
-    	# if delta > 60:
-    	#n = datetime.now().strftime('%d')
-    	#s = delta.strptime("%d days, %H:%M:%S.%f")
-    	# print(delta)
-    	#print(n)
     	return delta
-    	# return value.strptime(str(delta.days), format)
     return value.strftime(format)
 
 def login_required(f):
@@ -182,20 +168,6 @@ def login_is_valid(login):
 	match = re.match(r'^\b[a-z_][a-z0-9_.]{3,20}$', login)
 	if match:
 		return True
-
-def date(images):
-	for img in images:
-		# if img['created_time']:
-		img_time = img.get('created_time')
-		# time.strftime('%d %B %Y', time.localtime(img['created_time']))
-		# delta = (datetime.now() - img_time).strftime('%d %m %Y')
-	# print(img_time)
-	# print(delta, 'назад')
-	# time.strftime('%d %m %Y', delta)
-
-		# db_time = time.strftime(r"%d.%m.%Y %H:%M:%S", img['created_time'])
-	# 	# created_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(img['created_time']))
-	
 
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
@@ -355,7 +327,6 @@ def add_post():
 				avatar = item['avatar']
 				_id = item['_id']
 			now = datetime.now()
-			# now = time.mktime(datetime.now().timetuple())
 			save({
 				'title': title,
 				'created_time': now,
