@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Instagram</title>
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
+  <!-- <script src="/static/js/moment.min.js"></script> -->
+</head>
+
+<body>
+<nav class="_68u16 _gft4l" role="navigation">
+<div class="_axuw9">
+<div class="class=_s4gw0 _1arg4">
+<div class="_8na73 _kh1g4" >
+<div class="_5rnaq">
+  <div class="_iraxg" >
+    <div class="_catib" ><a class="_8scx2" href="{{ url_for('home') }}"><img src="{{ url_for('static', filename='ico/logo.png') }}"></a></div>
+  </div> 
+  <div class="_5ayw3 _ohiyl">
+  <input type="search" placeholder="Поиск">
+  </div>
+  <div class="_devkn">
+    <div class="_qlijk">
+      <div class="_b28md"><a href="{{ url_for('explore') }}"><img class="_3img" src="{{ url_for('static', filename='ico/_explore.png') }}" title="Найти людей"></a></div>
+      <div class="_b28md"><img class="_3img" src="{{ url_for('static', filename='ico/_heart2.png') }}"> <!-- Что нового --></div>
+      <div class="_b28md"><a href="{{ url_for('user', username=session['username']) }}"><img class="_3img" src="{{ url_for('static', filename='ico/_usr.png') }}" title="Профиль"></a></div>
+    </div>
+  </div></div>
+  
+</div>
+</div>
+</div>
+</nav>
+{% block main %}
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<div class="_pfyik" role='dialog'>
+ <div class="_23gmb"></div>
+ <div class="_o0j5z">  
+  <div class="_784q7 _3g81g">
+   <div class="_lfwfo _euzqy">{{ title }}</div>
+   <div class="_gs38e">
+    <ul class="_8q670 _b9n99">
+    {% for user in users %}
+     <li class="_6e4x5">
+      <div class="_npuc5">
+        <div class="_f5wpw">
+         <a class="_4a6q9 _i2o1o _gvoze" href="{{ url_for('user', username=user.name) }}" style="width: 30px;height: 30px;"><img class="_rewi8" src="{{ url_for('static', filename='avatars/'+ user.avatar) }}"></a>
+         <div class="_eryrc">
+           <a class="_art_head_2" href="{{ url_for('user', username=user.name) }}">{{ user.name }}</a>
+         </div>
+        </div>
+      <div class="_mtnzs">
+        <span class="_ov9ai">
+            {% if user.name == session['username'] %}
+              <a class="_l9ml9" href="{{ url_for('edit_account') }}">
+              <button class="_qv64e _t78yp _4tgw8 _njrw0" name="edit">Редактировать профиль</button></a>
+            {% else %}
+            <form method="POST">
+              {% if session['username'] in user.followers %}
+                <input class="_qv64e _t78yp _4tgw8 _njrw0" name="follow" type="submit" value="Подписки">
+              {% else %}
+                <input class="_qv64e _gexxb _4tgw8 _njrw0" name="follow" type="submit" value="Подписаться">
+              {% endif %}
+            {% endif %}
+            <input type="hidden" name="u_fol" value="{{ user.name }}">
+            </form>
+        </span>
+      </div>
+      </div>
+     </li>
+    {% endfor %}
+    </ul>
+   </div>
+  </div>
+ </div>
+ <button class="_dcj9f">Закрыть</button>
+</div>
+<script src="{{ url_for('static', filename='js/fol_cls.js') }}"></script>
+
+{% endblock %}

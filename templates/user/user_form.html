@@ -1,0 +1,42 @@
+<main class="_8fi2q _2v79o">
+<div class="_28rsa">
+<article class="_75z9k">
+<div><h1 class="_gvhl0">{{ title }}</h1></div>
+<form method="POST" class="_fx423">
+<div class="_e1xik"><aside class="_kx10g">Имя пользователя</aside>
+  <div class="_cd2n1">
+  <input type="text" class="_jh9m1 _o716c" name="name" pattern="^\b[a-z_][a-z0-9_.]{3,20}$" required title="Только буквы латинского алфавита в нижнем регистре, цифры и символы '.' и '_' (3-20 символов)"></div>
+</div>
+<div class="_e1xik"><aside class="_kx10g">Пароль</aside>
+  <div class="_cd2n1"><input type="password" class="_jh9m1 _o716c" name="password" required></div>
+</div>
+<div class="_e1xik"><aside class="_kx10g _ldhkl"></aside>
+  <div class="_cd2n1">
+  <div class="_qr7ez">
+    <span class="_ov9ai">
+      <input type="submit" class="_qv64e _gexxb _r9b8f _jfvwv" value="{{ button_title }}">
+    </span>
+  </div>
+  </div>
+</div>
+<div class="_e1xik">
+<aside class="_kx10g _kx100 _ldhkl">
+<label>
+{% if button_title == 'Войти' %}
+   Нет аккаунта? Тогда вам<a href="{{ url_for('register') }}"> сюда</a>
+{% else %}
+   <a href="{{ url_for('login') }}">У меня уже есть аккаунт</a>
+{% endif %}
+</label></aside>
+  <div class="_cd2n1">
+  <div class="_hvr4x">
+    {% for msg in get_flashed_messages() %}
+      <p class="_32qhv _n0dm9">{{ msg }}</p>
+    {% endfor %}
+  </div>
+  </div>
+</div>
+</form>
+</article>
+</div>
+</main>

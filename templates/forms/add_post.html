@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<main class="_8fi2q _2v79o">
+<div class="_28rsa _600rsa">
+<article class="_75z9k">
+<div><h1 class="_gvhl0 _gvhl1">Добавить фото</h1></div>
+<header class=" _3fdmx">
+  <div class="_b0acm">
+    <div class="_j1234 _j3456">
+      <button class="_1frkc" id="bt" title="Выбрать фото" onclick="document.getElementById('load').click()"><img id="myimage" alt="Выбрать фото" class="_fya1f"></button>
+    </div>
+  </div>
+<div class="_o6mpc">
+<form method="POST" class="_fx423" enctype="multipart/form-data">
+
+<div class="_e1xik"><aside class="_kx100">Название</aside>
+  <div class="_cd2n1">
+  <input type="text" class="_jh9m1 _o716c" name="title"></div>
+</div>
+<div class="_e1xik"><aside class="_kx100">Описание</aside>
+  <div class="_cd2n1">
+  <textarea class="_jh9m1 _o716c" name="description"></textarea></div> 
+</div>
+<div class="_e1xik"><aside class="_kx100">Теги(#...)</aside>
+  <div class="_cd2n1">
+  <input type="text" class="_jh9m1 _o716c" name="tags"></div>
+</div>
+<div class="_e1xik">
+  <input type="file" name="upload" class="_l8al6" id="load"
+  onchange="onFileSelected(event)"></div>
+
+<div class="_e1xik">
+  <div class="_cd2n1">
+  <div class="_qr7ez">
+    <span class="_ov9ai">
+      <input type="submit" class="_qv64e _gexxb _r9b8f _jfvwv" value="Опубликовать">
+    </span>
+  </div>
+  </div>
+</div>
+<div class="_e1xik">
+<aside class="_kx100 _ldhkl"><label></label></aside>
+  <div class="_cd2n1">
+  <div class="_hvr4x">
+    {% for msg in get_flashed_messages() %}
+      <p class="_32qhv _n0dm9">{{ msg }}</p>
+    {% endfor %}
+  </div>
+  </div>
+</div>
+</form>
+</div>
+</header>
+</article>
+</div>
+</main>
+<script src="{{ url_for('static', filename='js/fsel.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'errors/error_base.html' %}
+
+{% block main %}
+
+<div class="main -cx-PRIVATE-Page__main">
+  <div class="error-container -cx-PRIVATE-ErrorPage__errorContainer">
+    <h2 class="_h2err">К сожалению, данная Страница недоступна.</h2>
+    <p>Возможно, вы воспользовались недействительной ссылкой или страница была удалена. <a href="{{ url_for('home') }}">Назад в Instagram.</a></p>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<section class="_29u45">
+  <main class="_8fi2q _2v79o">
+    <article class="_jzhdd">
+    {% if tag %}
+      <header class="_j5dqo">
+        <h1 class="_kwqc3">{{ tag }}</h1>
+        <span class="_t98z6">
+        <span class="_fd86t">{{ images.count() }}</span> публикаций</span>
+      </header>
+    {% endif %}
+  {% block images %}
+      {# {% if images.count() > 3 %} #}
+      <div>
+        <div class="_mck9w _gvoze _f2mse">
+        <span class="_thumb">
+          {% for img in images %}
+            <a href="{{ url_for('detail', _id=img._id) }}">
+            <img src="{{ url_for('static', filename=img.path) }}"></a>
+          {% endfor %}
+        </span>
+        </div>
+      </div>
+       {# {% endif %} #}
+  {% endblock %} 
+    </article>
+  </main>
+</section>
+
+{% endblock %}

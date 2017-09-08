@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Instagram</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+<nav class="_68u16 _gft4l" role="navigation">
+<div class="_axuw9">
+<div class="class=_s4gw0 _1arg4">
+<div class="_8na73 _kh1g4" >
+<div class="_5rnaq">
+  <div class="_iraxg" >
+    <div class="_catib" ><a class="_8scx2" href="{{ url_for('home') }}"><img src="{{ url_for('static', filename='ico/logo.png') }}"></a></div>
+  </div>
+      <div class="_b28md"><a class="_art_head_2" href="{{ url_for('user', username=session['username']) }}">{{ session['username'] }}</a></div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+{% block main %}
+{% endblock %}
+</body>
+</html>
