@@ -1,8 +1,8 @@
 import time
-from datetime import *
+from datetime import datetime
 from flask import (
 	Flask, render_template, request, redirect,
-	send_from_directory, url_for, session, flash, abort
+	send_from_directory, url_for, session, flash, abort, jsonify
 )
 from pymongo import MongoClient
 from bson.objectid import ObjectId
@@ -10,9 +10,11 @@ from bson.objectid import ObjectId
 from werkzeug import secure_filename
 from functools import wraps
 import re
+from flask_moment import Moment
 
 app = Flask(__name__)
 app.secret_key = 'ouFUu-erv/r?reRBGrn/Ur83-64+j!C4nN<#8)vjnss-btr-eDA6'
+moment = Moment(app)
 
 def get_image_collection():
     client = MongoClient()
@@ -151,9 +153,6 @@ def format_datetime(value, format='medium'):
         format="%Y-%m-%d %H:%M:%S"
     elif format == 'medium':
         format="%d %B %Y"
-    elif format == 'delta':
-    	delta = datetime.now() - value
-    	return delta
     return value.strftime(format)
 
 def login_required(f):
@@ -326,7 +325,8 @@ def add_post():
 			for item in user:
 				avatar = item['avatar']
 				_id = item['_id']
-			now = datetime.now()
+			now = datetime.utcnow()
+			# now = time.mktime(datetime.now().timetuple())
 			save({
 				'title': title,
 				'created_time': now,
@@ -408,4 +408,4 @@ def page_not_found(error):
 
 app.jinja_env.filters['datetime'] = format_datetime
 if __name__ == '__main__':
-	app.run()
+	app.run(debug=True)

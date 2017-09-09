@@ -62,10 +62,8 @@
       </div>
   </div>
   <div class="_ha6c6 _6d44r">
-  <time class="_p29ma _6g6t5" datetime = "{{ img.created_time | datetime }}" title="{{ img.created_time | datetime('delta') }} назад">{{ img.created_time | datetime }}</time></div>
-  {# <span datetime="{{ img.created_time }}" <script>moment({{img.created_time}}.fromNow())</script> >5 минут назад</span></div> #}
-  
-  {# {{ img.created_time.strftime('%Y-%m-%d')) }} #}
+  <time class="_p29ma _6g6t5" title="{{img.created_time | datetime}}"> 
+  {{moment(img.created_time).fromNow(refresh = True)}}</time></div>
 
 <section class="_km7ip _ti7l3">
   <form class="_b6i0l" method="POST">
@@ -82,5 +80,4 @@
 </main>
 </section>
 <script src="/static/js/res_ta.js"></script>
-
 {% endblock %}
