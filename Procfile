@@ -1,1 +1,1 @@
-"web: python insta.py" 
+"web: gunicorn insta.py" 
