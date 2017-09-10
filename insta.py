@@ -4,6 +4,7 @@ from flask import (
 	Flask, render_template, request, redirect,
 	send_from_directory, url_for, session, flash, abort
 )
+from werkzeug.contrib.fixers import ProxyFix
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 # from bson.dbref import DBRef
@@ -407,5 +408,6 @@ def page_not_found(error):
     return render_template('errors/404.html'), 404
 
 app.jinja_env.filters['datetime'] = format_datetime
+app.wsgi_app = ProxyFix(app.wsgi_app)
 if __name__ == '__main__':
-	app.run(host='0.0.0.0', debug=True)
+	app.run()
