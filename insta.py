@@ -19,13 +19,13 @@ moment = Moment(app)
 
 def get_image_collection():
     client = MongoClient()
-    db = client.yyy
+    db = client.heroku_r32zgh6c
     col = db.images
     return col
 
 def get_user_collection():
     client = MongoClient()
-    db = client.yyy
+    db = client.heroku_r32zgh6c
     col = db.users
     return col
 
