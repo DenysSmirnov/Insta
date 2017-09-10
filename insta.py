@@ -2,7 +2,7 @@ import time
 from datetime import datetime
 from flask import (
 	Flask, render_template, request, redirect,
-	send_from_directory, url_for, session, flash, abort, jsonify
+	send_from_directory, url_for, session, flash, abort
 )
 from pymongo import MongoClient
 from bson.objectid import ObjectId
@@ -408,4 +408,4 @@ def page_not_found(error):
 
 app.jinja_env.filters['datetime'] = format_datetime
 if __name__ == '__main__':
-	app.run(debug=True)
+	app.run(host='0.0.0.0', debug=True)

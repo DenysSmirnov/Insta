@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block main %}
+
 <section class="_sq4bv _29u45">
 <main class="_main">
   <div>
@@ -29,7 +30,9 @@
     {% endif %}
     </form>
     <div class="_com _aut_com">
+    {% if img.description %}
       <span><a class="_art_head_2" href="{{ url_for('user', username=img.author.name) }}">{{ img.author.name }}</a> {{ img.description }}
+    {% endif %}
           {% for tag in img.tags %}
             <span><a href="{{ url_for('explore', tag=tag) }}">{{ tag }}</a></span>
           {% endfor %}
@@ -39,7 +42,7 @@
       <div class="_listcoms">
       {% for com_dict in img.comments %}
         {% for username, comment in com_dict.items() %}
-        <div class="_com _aut_com" ><a class="_art_head_2" href="{{ url_for('user', username=username) }}">{{ username }}</a>
+        <div class="_hdiv _com _aut_com"><a class="_art_head_2" href="{{ url_for('user', username=username) }}">{{ username }}</a>
         <span>{{ comment }}</span>
 
         <!-- {% if comment | length > 160 %}
@@ -47,7 +50,7 @@
         {% else %}
           {{ comment }}
         {% endif %} -->
-        
+
           <div class="_com _form_del">
             <form method="POST">
             {% if session['username'] == img.author.name or session['username'] ==  username %}
@@ -59,6 +62,9 @@
         </div>
         {% endfor %}
       {% endfor %}
+      {% if img.comments | length > 2 %}
+        <a class="archive" href="#"></a>
+      {% endif %}
       </div>
   </div>
   <div class="_ha6c6 _6d44r">
@@ -79,5 +85,6 @@
   </div>
 </main>
 </section>
+<script src="/static/js/jq_coms.js"></script>
 <script src="/static/js/res_ta.js"></script>
 {% endblock %}

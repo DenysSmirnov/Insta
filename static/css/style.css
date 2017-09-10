@@ -1091,8 +1091,9 @@ a:focus {
 ._ha6c6 {
     display: block;
 }
+.archive {
+    color: #999;
 }
-
 @media (min-width: 414px){
 ._cepxb {
     margin: 0 auto;
