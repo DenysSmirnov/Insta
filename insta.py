@@ -6,25 +6,28 @@ from flask import (
 )
 from werkzeug.contrib.fixers import ProxyFix
 from pymongo import MongoClient
+# from flask_mongoengine import MongoEngine
 from bson.objectid import ObjectId
 # from bson.dbref import DBRef
 from werkzeug import secure_filename
 from functools import wraps
 import re
 from flask_moment import Moment
+import urllib
 
 app = Flask(__name__)
+uri = 'mongodb://'+urllib.parse.quote("densmith77@gmail.com")+':'+urllib.parse.quote("insta01grambase")+'@ds133094.mlab.com:33094/heroku_r32zgh6c'
 app.secret_key = 'ouFUu-erv/r?reRBGrn/Ur83-64+j!C4nN<#8)vjnss-btr-eDA6'
 moment = Moment(app)
 
 def get_image_collection():
-    client = MongoClient()
+    client = MongoClient(uri)
     db = client.heroku_r32zgh6c
     col = db.images
     return col
 
 def get_user_collection():
-    client = MongoClient()
+    client = MongoClient(uri)
     db = client.heroku_r32zgh6c
     col = db.users
     return col
