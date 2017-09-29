@@ -25,7 +25,7 @@
 {% if button_title == 'Войти' %}
    Нет аккаунта? Тогда вам<a href="{{ url_for('.register') }}"> сюда</a>
 {% else %}
-   <a href="{{ url_for('login') }}">У меня уже есть аккаунт</a>
+   <a href="{{ url_for('.login') }}">У меня уже есть аккаунт</a>
 {% endif %}
 </label></aside>
   <div class="_cd2n1">

@@ -122,3 +122,18 @@ def update_profile(fio, name, about, mail):
 def update_password(password):
 	mongo.db.users.update_one({'name' : session['username']},{
 		'$set': {'password' : password}})
+
+def user_check_and_create(name, password):
+	col = mongo.db.users
+	i = col.find({'name': name}).count()
+	if i == 0:
+		col.insert_one({
+			'name': name,
+			'password': password,
+			'followers': [],
+			'following': [],
+			'avatar': 'no_avatar.png'
+		})
+		return True
+	else:
+		return False

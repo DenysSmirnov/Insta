@@ -1,7 +1,7 @@
 from core.other import *
 from core.model import (
 	get_users, get_images, get_following, follow, update_profile,
-	update_password, save_avatar
+	update_password, save_avatar, user_check_and_create
 )
 from flask import (
 	render_template, request, redirect, url_for, session, 
@@ -16,19 +16,11 @@ def register():
 	name = None
 	password = None
 	if request.method == 'POST':
-		col = get_user_collection()
 		name = request.form.get('name')
 		password = request.form.get('password')
 		if login_is_valid(name):
-			i = col.find({'name': name}).count()
-			if i == 0:
-				col.insert_one({
-					'name': name,
-					'password': password,
-					'followers': [],
-					'following': [],
-					'avatar': 'no_avatar.png'
-				})
+			new_user = user_check_and_create(name, password)
+			if new_user:
 				return redirect(url_for('.login'))
 			else:
 				flash('Имя уже занято')
