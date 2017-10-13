@@ -1,10 +1,8 @@
 import os
 from urllib.parse import quote_plus
-# basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class Config(object):
-	# Включение защиты против "Cross-site Request Forgery (CSRF)"
 	CSRF_ENABLED = True
 	SECRET_KEY = os.environ.get('SECRET_KEY') or 'very secret key'
 	MAX_CONTENT_LENGTH = 10 * 1024 * 1024
@@ -41,7 +39,7 @@ class HerokuConfig(ProductionConfig):
 
 
 class DevelopmentConfig(Config):
-	# DEVELOPMENT = False
+	DEVELOPMENT = True
 	DEBUG = True
 	MONGO_DBNAME = 'yyy'
 

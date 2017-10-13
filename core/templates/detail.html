@@ -3,7 +3,7 @@
 <section class="_sq4bv _29u45">
 <main class="_main">
   <div>
-    <div class="_owark">
+    <div class="_owark" id="articles">
   {% for img in images %}
   <article class="_s5vjd _622au _5lms4 _8n9ix" >
         <header class="_art_head">
@@ -18,14 +18,13 @@
               <form method="POST">
               {% if session['username'] == img.author.name %}
                 <button class="_cl_but_del" name="post_del" type="submit" value="{{ img._id }}" title="Удалить публикацию"><img src="/static/ico/_dcom.png"></button>
-                <input type="hidden" name="id" value="{{ img._id }}">
+                <input type="hidden" name="id" id="del_id" value="{{ img._id }}">
               {% endif %}
               </form>
             </div>
           </div>
         </header>
       <div><img src="{{ resize_url + img.path }}" width="600px"></div>
-      <!-- <div><img src="{{ url_for('static', filename='upload/resized-images/'+ img.path) }}" width="600px"></div> -->
   <div class="_art_foot">
     <form class="_8oo9w" method="POST">
     {% if session['username'] in img.liked_users %}
@@ -41,44 +40,33 @@
     {% if img.description %}
       <span><a class="_art_head_2" href="{{ url_for('.user', username=img.author.name) }}">{{ img.author.name }}</a> {{ img.description }}
     {% endif %}
-          {% for tag in img.tags %}
-            <span><a href="{{ url_for('.explore', tag=tag) }}">{{ tag }}</a></span>
-          {% endfor %}
+        {% for tag in img.tags %}
+          <span><a href="{{ url_for('.explore', tag=tag) }}">{{ tag }}</a></span>
+        {% endfor %}
       </span>
     </div>
     <div>
       <div class="_listcoms">
       {% for com_dict in img.comments %}
         {% for username, comment in com_dict.items() %}
-        <div class="_hdiv _com _aut_com"><a class="_art_head_2" href="{{ url_for('.user', username=username) }}">{{ username }}</a>
-        <span>{{ comment }}</span>
-
-        <!-- {% if comment | length > 160 %}
-          {{ comment | truncate(160, False) }} <a href="{{ comment }}">еще</a>
-        {% else %}
-          {{ comment }}
-        {% endif %} -->
-
-          <div class="_com _form_del">
-            <form method="POST">
-            {% if session['username'] == img.author.name or session['username'] ==  username %}
-              <button class="_cl_but_del" name="com_del" type="submit" value="{{comment}}" title="Удалить комментарий"><img src="/static/ico/_dcom.png"></button>
-              <input type="hidden" name="id" value="{{ img._id }}">
-            {% endif %}
-            </form>
+          <div class="_hdiv _com _aut_com"><a class="_art_head_2" href="{{ url_for('.user', username=username) }}">{{ username }}</a>
+            <span>{{ comment }}</span>
+            <div class="_com _form_del">
+              <form method="POST">
+              {% if session['username'] == img.author.name or session['username'] ==  username %}
+                <button class="_cl_but_del" name="com_del" type="submit" value="{{ comment }}" title="Удалить комментарий"><img src="/static/ico/_dcom.png"></button>
+                <input type="hidden" name="id" value="{{ img._id }}">
+              {% endif %}
+              </form>
+            </div>
           </div>
-        </div>
         {% endfor %}
       {% endfor %}
-      {% if img.comments | length > 2 %}
-        <a class="archive" href="#"></a>
-      {% endif %}
       </div>
   </div>
   <div class="_ha6c6 _6d44r">
   <time class="_p29ma _6g6t5" title="{{img.created_time | datetime}}"> 
   {{moment(img.created_time).fromNow(refresh = True)}}</time></div>
-
 <section class="_km7ip _ti7l3">
   <form class="_b6i0l" method="POST">
     <textarea class="_bilrf" name="comment" placeholder="Добавьте комментарий..."></textarea>
@@ -90,9 +78,9 @@
   </article>
   {% endfor %}
     </div>
-  </div>
+</div>
 </main>
 </section>
-{# <script src="/static/js/jq_coms.js"></script> #}
-<script src="/static/js/res_ta.js"></script>
+<script src="{{ url_for('static', filename='js/jq_coms.js') }}"></script>
+<script src="{{ url_for('static', filename='js/res_ta.js') }}"></script>
 {% endblock %}

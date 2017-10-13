@@ -207,7 +207,7 @@ a:focus {
 ._8scx2 {
     display: block;
     white-space: nowrap;
-    width: 85px;
+    /*width: 85px;*/
 }
 ._5ayw3 {
     -webkit-box-flex: 0;
@@ -244,7 +244,7 @@ a:focus {
 ._main {
     background-color: #FBFBFB;
 }
-._thumb img{
+._thumb img {
     margin-right: 3px;
     margin-bottom: 3px;
     width: 30%;
@@ -1037,6 +1037,8 @@ a:focus {
 }
 .archive {
     color: #999;
+    margin-bottom: 4px;
+    cursor: pointer;
 }
 ._del_post {
     overflow: hidden;
@@ -1099,6 +1101,12 @@ a:focus {
     display: block;
     overflow: hidden;
     position: relative;
+}
+.col {
+    display: inline-block;
+    /*width: 100%;*/
+    /*height: auto;*/
+    /*float: left;*/
 }
 @media (min-width: 414px){
 ._cepxb {
@@ -1213,6 +1221,17 @@ a:focus {
     width: 100%;
 }
 }
+@media (max-width: 736px) {
+.img-container {
+    display: inline-block;
+    width: 31%;
+    max-height: 296px;
+    min-height: 108px;
+    min-width: 108px;
+    margin: 4px 0 0 4px;
+    overflow: hidden;
+}
+}
 @media (min-width: 736px) {
 ._mainc {
     margin-bottom: 44px;
@@ -1320,11 +1339,24 @@ a:focus {
 ._6g6t5 {
     line-height: 18px;
 }
+.img-container {
+    display: inline-block;
+    width: 32%;
+    max-height: 296px;
+    margin: 4px 0 0 4px;
+    overflow: hidden;
 }
 @media (min-width: 791px) {
-._thumb img{
+._thumb img {
     margin-right: 22px;
     margin-bottom: 20px;
     width: 30%;
+}
+}
+@media (min-width: 971px) {
+.img-container {
+    max-height: 282px;
+    max-width: 282px;
+    margin: 20px 0 0 20px;
 }
 }

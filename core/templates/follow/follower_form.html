@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-
 {% block main %}
 <div class="_pfyik" role='dialog'>
  <div class="_23gmb"></div>
@@ -24,15 +23,12 @@
               <a class="_l9ml9" href="{{ url_for('.edit_account') }}">
               <button class="_qv64e _t78yp _4tgw8 _njrw0" name="edit">Редактировать профиль</button></a>
             {% else %}
-            <form method="POST">
               {% if session['username'] in user.followers %}
-                <input class="_qv64e _t78yp _4tgw8 _njrw0" name="follow" type="submit" value="Подписки">
+                <input class="_qv64e _t78yp _4tgw8 _njrw0" name="follow" type="button" id="{{ user.name }}" value="Подписки">
               {% else %}
-                <input class="_qv64e _gexxb _4tgw8 _njrw0" name="follow" type="submit" value="Подписаться">
+                <input class="_qv64e _gexxb _4tgw8 _njrw0" name="follow" type="button" id="{{ user.name }}" value="Подписаться">
               {% endif %}
             {% endif %}
-            <input type="hidden" name="u_fol" value="{{ user.name }}">
-            </form>
         </span>
       </div>
       </div>
@@ -45,5 +41,4 @@
  <button class="_dcj9f">Закрыть</button>
 </div>
 <script src="{{ url_for('static', filename='js/fol_cls.js') }}"></script>
-
 {% endblock %}

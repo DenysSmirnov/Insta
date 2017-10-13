@@ -5,27 +5,28 @@
     <article class="_jzhdd">
     {% if tag %}
       <header class="_j5dqo">
-        <h1 class="_kwqc3">{{ tag }}</h1>
+        <h1 class="_kwqc3" id="tag">{{ tag }}</h1>
         <span class="_t98z6">
-        <span class="_fd86t">{{ images.count() }}</span> публикаций</span>
+         <span class="_fd86t">
+          {% with total = images.count() %}
+            {{ total }}</span> публикаци{% if 10 < total < 21 or total %10 in (5,6,7,8,9,0) %}й{% elif total %10 in (2,3,4) %}и{% else %}я{% endif %}
+          {% endwith %}</span>
       </header>
     {% endif %}
   {% block images %}
-      {# {% if images.count() > 3 %} #}
       <div>
-        <div class="_mck9w _gvoze _f2mse">
-        <span class="_thumb">
+        <div class="col" id="ph123">
           {% for img in images %}
+          <div class="img-container">
             <a href="{{ url_for('.detail', _id=img._id) }}">
             <img src="{{ resize_url + img.path }}"></a>
-            {# | resize('300x300', fill = 1) #}
+          </div>
           {% endfor %}
-        </span>
         </div>
       </div>
-       {# {% endif %} #}
   {% endblock %} 
     </article>
   </main>
 </section>
+<script src="{{ url_for('static', filename='js/scroll.js') }}"></script>
 {% endblock %}

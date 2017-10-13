@@ -1,20 +1,32 @@
 from flask import session, abort
 from bson.objectid import ObjectId
-# from bson.dbref import DBRef
 from .base import mongo
 
-def get_images(tag=None, _id=None, author=None, author_follow=None):
+def get_images(tag=None, _id=None, author=None, 
+	author_follow=None, last_id=None):
 	col = mongo.db.images
+	if tag and last_id:
+		return col.find({'tags': tag, '_id': {'$lt': ObjectId(last_id)}},\
+			{'_id':1, 'path':1}).sort([('_id', -1)]).limit(6)
+	if author and last_id:
+		return col.find({'author.name': author, '_id': {'$lt': ObjectId(last_id)}},\
+			{'_id':1, 'path':1}).sort([('_id', -1)]).limit(6)
+	if author_follow and last_id:
+		return col.find({'author.name': {'$in': author_follow}, '_id': {'$lt': ObjectId(last_id)}}).\
+			sort([('_id', -1)])
+	if last_id:
+		return col.find({'_id': {'$lt': ObjectId(last_id)}},\
+			{'_id':1, 'path':1}).sort([('_id', -1)]).limit(12)
 	if tag:
-		return col.find({'tags': tag})
+		return col.find({'tags': tag}).sort([('_id', -1)]).limit(6)
 	if _id:
 		return col.find({'_id': ObjectId(_id)})
 	if author:
-		return col.find({'author.name': author}).sort([('_id', -1)])
+		return col.find({'author.name': author}).sort([('_id', -1)]).limit(6)
 	if author_follow:
 		return col.find({'author.name': {'$in': author_follow}}).\
-			sort([('_id', -1)])#.limit(10)
-	return col.find().sort([('_id', -1)])
+			sort([('_id', -1)])
+	return col.find({},{'_id':1, 'path':1}).sort([('_id', -1)]).limit(12) # explore/ all
 
 def get_users(username=None, names=None, data=None):
 	col = mongo.db.users
@@ -58,6 +70,7 @@ def follow(username):
 				{'name' : username},{'$pull': {
 				'followers' : session['username']}}
 			)
+			return 0
 		else:
 			col.update_one(
 				{'name' : session['username']},{'$addToSet': {
@@ -67,6 +80,7 @@ def follow(username):
 				{'name' : username},{'$addToSet': {
 				'followers' : session['username']}}
 			)
+			return 1
 
 def add_comment(_id, comment):
 	mongo.db.images.update_one(

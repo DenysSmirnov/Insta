@@ -9,6 +9,7 @@ from flask import (
 )
 import os.path
 from werkzeug import secure_filename
+from bson.json_util import dumps
 from . import main
 
 @main.route('/register/', methods=['GET', 'POST'])
@@ -106,34 +107,35 @@ def user(username):
 		if request.form.get('follow'):
 			follow(username)
 			return redirect(url_for('.user', username=username))
-		if request.form.get('avatar'):
+		elif request.form.get('avatar'):
 			avatar = request.files['upload']
 			if avatar and allowed_img(avatar.filename):
 				resized_url = upload_img(avatar, res='152x152', quality=85)
 				save_avatar(username, resized_url)
+		elif request.form.get('startFrom'):
+			last_id = request.form['startFrom']
+			images = get_images(author=username, last_id=last_id)
+			return dumps(images)
 	return render_template('user.html', images=images, userdata=userdata, \
 		user_image_count=user_image_count, resize_url=resize_url)
 
-@main.route('/<username>/followers/', methods=['POST', 'GET'])
+@main.route('/<username>/followers/')
 @login_required
 def user_followers(username):
 	resize_url = app.config['UPLOAD_URL']
 	users = get_following(username, 'followers')
-	if request.method == 'POST':
-		if request.form.get('follow'):
-			name = request.form['u_fol']
-			follow(name)
-			return redirect(url_for('.user_followers', username=username))
 	return render_template('follow/followers.html', users=users, resize_url=resize_url)
 
-@main.route('/<username>/following/', methods=['POST', 'GET'])
+@main.route('/<username>/following/')
 @login_required
 def user_following(username):
 	resize_url = app.config['UPLOAD_URL']
 	users = get_following(username, 'following')
-	if request.method == 'POST':
-		if request.form.get('follow'):
-			name = request.form['u_fol']
-			follow(name)
-			return redirect(url_for('.user_following', username=username))
 	return render_template('follow/following.html', users=users, resize_url=resize_url)
+
+@main.route('/ajax_follow/', methods=['POST'])
+def ajax_follow():
+	if request.form.get("ufol"):
+		name = request.form["ufol"]
+		data = follow(name)
+		return str(data)

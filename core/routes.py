@@ -11,6 +11,7 @@ from flask import (
 )
 from datetime import datetime
 from . import main
+from bson.json_util import dumps
 
 @main.route('/explore/', methods=['POST', 'GET'])
 @login_required
@@ -18,7 +19,13 @@ def explore():
 	resize_url = app.config['UPLOAD_URL']
 	tag = request.args.get('tag')
 	images = get_images(tag)
-	return render_template('explore.html', images=images, tag=tag, resize_url=resize_url)
+	if request.method == 'POST':
+		if request.form.get('startFrom'):
+			last_id = request.form['startFrom']
+			images = get_images(tag, last_id=last_id)
+			return dumps(images)
+	return render_template('explore.html', images=images,
+		tag=tag, resize_url=resize_url)
 
 @main.route('/detail/', methods=['POST', 'GET'])
 @login_required
@@ -75,7 +82,12 @@ def home():
 			_id = request.form['id']
 			del_post(_id)
 			return redirect(url_for('.home'))
-	return render_template('home.html', images=images, resize_url=resize_url)
+		elif request.form.get('startFrom'):
+			last_id = request.form['startFrom']
+			images = get_images(author_follow=names, last_id=last_id)
+			return dumps(images)
+	return render_template('home.html', images=images,
+		resize_url=resize_url)
 
 @main.route('/add_post/', methods=['POST', 'GET'])
 @login_required
