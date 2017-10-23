@@ -1,7 +1,6 @@
 # import os.path
 from core.model import (
-	get_users, get_images, add_comment, del_comment, del_post, save,
-	add_like
+	get_users, get_images, add_comment, save, add_like
 )
 from core.other import login_required, allowed_img, upload_img
 from core.errors import page_not_found
@@ -72,16 +71,8 @@ def home():
 				add_comment(_id, comment)
 		elif request.form.get('like'):
 			_id = request.form['like']
-			add_like(_id)
-			return redirect(url_for('.home'))
-		elif request.form.get('com_del'):
-			comment = request.form['com_del']
-			_id = request.form['id']
-			del_comment(_id, comment)
-		elif request.form.get('post_del'):
-			_id = request.form['id']
-			del_post(_id)
-			return redirect(url_for('.home'))
+			data = add_like(_id)
+			return str(data)
 		elif request.form.get('startFrom'):
 			last_id = request.form['startFrom']
 			images = get_images(author_follow=names, last_id=last_id)

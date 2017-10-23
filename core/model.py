@@ -1,32 +1,35 @@
-from flask import session, abort
+from flask import session, abort, current_app as app
 from bson.objectid import ObjectId
+# from bson.dbref import DBRef
 from .base import mongo
 
-def get_images(tag=None, _id=None, author=None, 
+def get_images(tag=None, _id=None, author=None,
 	author_follow=None, last_id=None):
 	col = mongo.db.images
+	limit_main = app.config['NUM_PER_PAGE_MAIN']
+	limit = app.config['NUM_PER_PAGE']
 	if tag and last_id:
 		return col.find({'tags': tag, '_id': {'$lt': ObjectId(last_id)}},\
-			{'_id':1, 'path':1}).sort([('_id', -1)]).limit(6)
+			{'_id':1, 'path':1}).sort([('_id', -1)]).limit(limit)
 	if author and last_id:
 		return col.find({'author.name': author, '_id': {'$lt': ObjectId(last_id)}},\
-			{'_id':1, 'path':1}).sort([('_id', -1)]).limit(6)
+			{'_id':1, 'path':1}).sort([('_id', -1)]).limit(limit)
 	if author_follow and last_id:
 		return col.find({'author.name': {'$in': author_follow}, '_id': {'$lt': ObjectId(last_id)}}).\
-			sort([('_id', -1)])
+			sort([('_id', -1)]).limit(limit_main)
 	if last_id:
 		return col.find({'_id': {'$lt': ObjectId(last_id)}},\
-			{'_id':1, 'path':1}).sort([('_id', -1)]).limit(12)
+			{'_id':1, 'path':1}).sort([('_id', -1)]).limit(limit)
 	if tag:
-		return col.find({'tags': tag}).sort([('_id', -1)]).limit(6)
+		return col.find({'tags': tag}).sort([('_id', -1)]).limit(limit)
 	if _id:
 		return col.find({'_id': ObjectId(_id)})
 	if author:
-		return col.find({'author.name': author}).sort([('_id', -1)]).limit(6)
+		return col.find({'author.name': author}).sort([('_id', -1)]).limit(limit)
 	if author_follow:
 		return col.find({'author.name': {'$in': author_follow}}).\
-			sort([('_id', -1)])
-	return col.find({},{'_id':1, 'path':1}).sort([('_id', -1)]).limit(12) # explore/ all
+			sort([('_id', -1)]).limit(limit_main)
+	return col.find({},{'_id':1, 'path':1}).sort([('_id', -1)]).limit(limit) # explore/ all
 
 def get_users(username=None, names=None, data=None):
 	col = mongo.db.users
@@ -93,9 +96,18 @@ def del_comment(_id, comment):
 		{'_id' : ObjectId(_id)},{'$pull': {
 		'comments' : {session['username']: comment}}}
 	)
+	return 1
 
 def del_post(_id):
-	mongo.db.images.delete_one({'_id' : ObjectId(_id)})
+	col = mongo.db.images
+	data = col.find({'_id' : ObjectId(_id)})
+	for item in data:
+		if item['author']['name'] == session['username']:
+			col.delete_one({'_id' : ObjectId(_id)})
+			return 1
+		else:
+			print('Подделка запроса на удаление поста!')
+			return 0
 
 def add_like(_id):
 	col = mongo.db.images
@@ -106,11 +118,13 @@ def add_like(_id):
 				{'_id' : ObjectId(_id)},{'$pull': {
 				'liked_users' : session['username']}}
 			)
+			return 0
 		else:
 			col.update_one(
 				{'_id' : ObjectId(_id)},{'$addToSet': {
 				'liked_users' : session['username']}}
 			)
+			return 1
 
 def update_profile(fio, name, about, mail):
 	col = mongo.db.users

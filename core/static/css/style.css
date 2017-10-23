@@ -280,9 +280,9 @@ a:focus {
     color: #000;
     /*margin-bottom: 4px;*/
 }
-._8oo9w {
+/*._8oo9w {
     margin-top: 10px;
-}
+}*/
 ._art_foot {
     padding: 0 16px;
 }
@@ -298,13 +298,18 @@ a:focus {
     background-color: #fff;
     border-width: 0;
     margin-left: -6px;
-    padding-bottom: 5px;
+    margin-bottom: 5px;
+    margin-top: 10px;
+    cursor: pointer;
+    width: max-content;
+    outline: none;
 }
-._cl_but_del {
+._post_but_del, ._com_but_del{
     background-color: #fff;
     border-width: 0;
     align-items: right;
     cursor: pointer;
+    outline: none;
 }
 ._ti7l3 {
     margin-top: 4px;
@@ -535,6 +540,9 @@ a:focus {
 ._com {display:inline-block;}
 ._aut_com {
     float:left;
+    margin-bottom: 4px;
+}
+._like {
     margin-bottom: 4px;
 }
 ._form_del {float:right;width:20px;}
@@ -1108,6 +1116,24 @@ a:focus {
     /*height: auto;*/
     /*float: left;*/
 }
+
+/*TWITTER HEART*/
+.heart {
+  width: 34px;
+  height: 34px;
+  background: url("/static/ico/heart6.png") no-repeat;
+  background-position: 0 0;
+  cursor: pointer;
+  transition: background-position 1s steps(28);
+  transition-duration: 0s;
+  margin-top: 5px;
+  margin-left: -5px;
+}
+.is-active {
+    transition-duration: 1s;
+    background-position: -2800px 0;
+}
+
 @media (min-width: 414px){
 ._cepxb {
     margin: 0 auto;

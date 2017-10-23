@@ -1,11 +1,12 @@
 from core.other import *
 from core.model import (
 	get_users, get_images, get_following, follow, update_profile,
-	update_password, save_avatar, user_check_and_create
+	update_password, save_avatar, user_check_and_create, del_post,
+	del_comment
 )
 from flask import (
 	render_template, request, redirect, url_for, session, 
-	send_from_directory, flash, abort
+	send_from_directory, flash, abort, current_app as app
 )
 import os.path
 from werkzeug import secure_filename
@@ -133,9 +134,21 @@ def user_following(username):
 	users = get_following(username, 'following')
 	return render_template('follow/following.html', users=users, resize_url=resize_url)
 
-@main.route('/ajax_follow/', methods=['POST'])
-def ajax_follow():
+@main.route('/ajax_/', methods=['POST'])
+def ajax():
 	if request.form.get("ufol"):
 		name = request.form["ufol"]
 		data = follow(name)
 		return str(data)
+	elif request.form.get('delPost'):
+		_id = request.form['delPost']
+		data = del_post(_id)
+		return str(data)
+	elif request.form.get('delCom'):
+		comment = request.form['delCom']
+		_id = request.form['imgId']
+		data = del_comment(_id, comment)
+		return str(data)
+	else:
+		return dumps({'uname': session['username'],
+			'numPerPage': app.config['NUM_PER_PAGE_MAIN']})

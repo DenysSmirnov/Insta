@@ -14,16 +14,19 @@
       </header>
     {% endif %}
   {% block images %}
+      {# {% if images.count() > 3 %} #}
       <div>
         <div class="col" id="ph123">
           {% for img in images %}
           <div class="img-container">
             <a href="{{ url_for('.detail', _id=img._id) }}">
             <img src="{{ resize_url + img.path }}"></a>
+            {# | resize('300x300', fill = 1) #}
           </div>
           {% endfor %}
         </div>
       </div>
+      {# {% endif %} #}
   {% endblock %} 
     </article>
   </main>

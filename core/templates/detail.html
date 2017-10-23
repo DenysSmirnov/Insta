@@ -2,42 +2,37 @@
 {% block main %}
 <section class="_sq4bv _29u45">
 <main class="_main">
-  <div>
-    <div class="_owark" id="articles">
+<div>
+  <div class="_owark" id="articles">
   {% for img in images %}
   <article class="_s5vjd _622au _5lms4 _8n9ix" >
-        <header class="_art_head">
+      <header class="_art_head">
         <a class="_4a6q9 _i2o1o _gvoze" href="{{ url_for('.user', username=img.author.name) }}" style="width: 30px;height: 30px;">
         <img class="_rewi8" src="{{ resize_url + img.author.avatar }}"></a>
           <div>
           <a class="_art_head_2" href="{{ url_for('.user', username=img.author.name) }}">{{ img.author.name }}</a>
           <div>{{ img.title }}</div>
           </div>
-          <div class="_del_post">
-            <div class="_com _form_del">
-              <form method="POST">
-              {% if session['username'] == img.author.name %}
-                <button class="_cl_but_del" name="post_del" type="submit" value="{{ img._id }}" title="Удалить публикацию"><img src="/static/ico/_dcom.png"></button>
-                <input type="hidden" name="id" id="del_id" value="{{ img._id }}">
-              {% endif %}
-              </form>
+          {% if session['username'] == img.author.name %}
+            <div class="_del_post">
+              <div class="_com _form_del">
+                <button class="_post_but_del" value="{{ img._id }}" title="Удалить публикацию"><img src="/static/ico/_dcom.png"></button>
+              </div>
             </div>
-          </div>
-        </header>
+          {% endif %}
+      </header>
       <div><img src="{{ resize_url + img.path }}" width="600px"></div>
   <div class="_art_foot">
-    <form class="_8oo9w" method="POST">
     {% if session['username'] in img.liked_users %}
-      <button class="_cl_but" name="like" type="submit" value="{{ img._id }}"><img src="/static/ico/heart_red.png"></button>
+      <button class="_cl_but" value="{{ img._id }}"><img src="/static/ico/heart_red.png"></button>
     {% else %}
-      <button class="_cl_but" name="like" type="submit" value="{{ img._id }}"><img src="/static/ico/heart_white.png"></button>
+      <button class="_cl_but" value="{{ img._id }}"><img src="/static/ico/heart_white.png"></button>
     {% endif %}
     {% if img.liked_users %}
-      Нравится: {{ img.liked_users | length }}
+      <span class="_like">Нравится: <span class="_likecount">{{ img.liked_users | length }}</span></span>
     {% endif %}
-    </form>
     <div class="_com _aut_com">
-    {% if img.description %}
+    {% if img.description or img.tags %}
       <span><a class="_art_head_2" href="{{ url_for('.user', username=img.author.name) }}">{{ img.author.name }}</a> {{ img.description }}
     {% endif %}
         {% for tag in img.tags %}
@@ -51,36 +46,39 @@
         {% for username, comment in com_dict.items() %}
           <div class="_hdiv _com _aut_com"><a class="_art_head_2" href="{{ url_for('.user', username=username) }}">{{ username }}</a>
             <span>{{ comment }}</span>
-            <div class="_com _form_del">
-              <form method="POST">
-              {% if session['username'] == img.author.name or session['username'] ==  username %}
-                <button class="_cl_but_del" name="com_del" type="submit" value="{{ comment }}" title="Удалить комментарий"><img src="/static/ico/_dcom.png"></button>
-                <input type="hidden" name="id" value="{{ img._id }}">
-              {% endif %}
-              </form>
-            </div>
+
+            <!-- {% if comment | length > 160 %}
+              {{ comment | truncate(160, False) }} <a href="{{ comment }}">еще</a>
+            {% else %}
+              {{ comment }}
+            {% endif %} -->
+
+            {% if session['username'] == img.author.name or session['username'] ==  username %}
+              <div class="_com _form_del">
+                <button class="_com_but_del" value="{{ comment }}" title="Удалить комментарий"><img src="/static/ico/_dcom.png"></button>
+              </div>
+            {% endif %}
           </div>
         {% endfor %}
       {% endfor %}
       </div>
-  </div>
-  <div class="_ha6c6 _6d44r">
-  <time class="_p29ma _6g6t5" title="{{img.created_time | datetime}}"> 
-  {{moment(img.created_time).fromNow(refresh = True)}}</time></div>
-<section class="_km7ip _ti7l3">
-  <form class="_b6i0l" method="POST">
-    <textarea class="_bilrf" name="comment" placeholder="Добавьте комментарий..."></textarea>
-    <input type="submit" class="cl_bsend" value="Send">
-    <input type="hidden" name="id" value="{{ img._id }}">
-  </form>
-</section>
+    </div>
+    <div class="_ha6c6 _6d44r">
+    <time class="_p29ma _6g6t5" title="{{img.created_time | datetime}}"> 
+    {{moment(img.created_time).fromNow(refresh = True)}}</time></div>
+    <section class="_km7ip _ti7l3">
+      <form class="_b6i0l" method="POST">
+        <textarea class="_bilrf" name="comment" placeholder="Добавьте комментарий..."></textarea>
+        <input type="submit" class="cl_bsend" value="Send">
+        <input type="hidden" name="id" value="{{ img._id }}">
+      </form>
+    </section>
   </div>
   </article>
   {% endfor %}
-    </div>
+  </div>
 </div>
 </main>
 </section>
-<script src="{{ url_for('static', filename='js/jq_coms.js') }}"></script>
-<script src="{{ url_for('static', filename='js/res_ta.js') }}"></script>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
 {% endblock %}
