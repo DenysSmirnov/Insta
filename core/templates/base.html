@@ -5,9 +5,9 @@
   <title>Insta</title>
   <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-  <!-- <script src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script> -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <!-- <script>window.jQuery || document.write('<script src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}">\x3C/script>')</script> -->
+  <script src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+  <script src="{{ url_for('static', filename='js/search.js') }}"></script>
   {{ moment.include_moment() }}
   {{ moment.lang("ru") }}
 </head>
@@ -19,9 +19,10 @@
 <div class="_5rnaq">
   <div class="_iraxg" >
     <div class="_catib" ><a class="_8scx2" href="{{ url_for('.home') }}"><img style="width:85px" src="{{ url_for('static', filename='ico/logo.png') }}"></a></div>
-  </div> 
+  </div>
   <div class="_5ayw3 _ohiyl">
-  <input type="search" placeholder="Поиск">
+    <input type="search" class="_avvq0 _o716c" placeholder="Поиск">
+    <span class="_i13c9"><img class="_search" src="{{ url_for('static', filename='ico/_search.png') }}"></span>
   </div>
   <div class="_devkn">
     <div class="_qlijk">
@@ -29,10 +30,8 @@
       <div class="_b28md"><img class="_3img" src="{{ url_for('static', filename='ico/_heart2.png') }}"> <!-- Что нового --></div>
       <div class="_b28md"><a href="{{ url_for('.user', username=session['username']) }}"><img class="_3img" src="{{ url_for('static', filename='ico/_usr.png') }}" title="Профиль"></a></div>
     </div>
-  </div></div>
-</div>
-</div>
-</div>
+  </div>
+</div></div></div></div>
 </nav>
 {% block main %}
 {% endblock %}

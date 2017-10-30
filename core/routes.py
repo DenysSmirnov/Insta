@@ -1,8 +1,10 @@
 # import os.path
 from core.model import (
-	get_users, get_images, add_comment, save, add_like
+	get_users, get_images, save, add_like, search
 )
-from core.other import login_required, allowed_img, upload_img
+from core.other import (
+	login_required, allowed_img, upload_img, text_is_valid
+)
 from core.errors import page_not_found
 from flask import ( 
 	render_template, request, redirect, send_from_directory,
@@ -64,12 +66,7 @@ def home():
 	images = get_images(author_follow=names)
 
 	if request.method == 'POST':
-		if request.form.get('comment'):
-			comment = request.form['comment'].strip()
-			if comment != '':
-				_id = request.form['id']
-				add_comment(_id, comment)
-		elif request.form.get('like'):
+		if request.form.get('like'):
 			_id = request.form['like']
 			data = add_like(_id)
 			return str(data)
@@ -115,3 +112,13 @@ def add_post():
 		elif not allowed_img(img.filename):
 			flash("Допустимый формат фото: 'png', 'jpg'")
 	return render_template('forms/add_post.html')
+
+@main.route('/search/', methods=['POST'])
+def ajax_search():
+	if request.form.get("referal"):
+		text = request.form["referal"].strip()
+		if text and text_is_valid(text):
+			data = search(text)
+			if data[0].count() > 0 or data[1].count() > 0:
+				return dumps(cursor for cursor in data)
+		return ''

@@ -48,6 +48,12 @@ def login_is_valid(login):
 	if match:
 		return True
 
+def text_is_valid(text):
+	match = re.match(r'([#.^|$]{1,})|(\w+\|)|(\\\w)', text)
+	if match:
+		return False
+	return True
+
 def format_datetime(value, format='medium'):
 	if format == 'full':
 		format="%Y-%m-%d %H:%M:%S"

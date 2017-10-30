@@ -46,13 +46,6 @@
         {% for username, comment in com_dict.items() %}
           <div class="_hdiv _com _aut_com"><a class="_art_head_2" href="{{ url_for('.user', username=username) }}">{{ username }}</a>
             <span>{{ comment }}</span>
-
-            <!-- {% if comment | length > 160 %}
-              {{ comment | truncate(160, False) }} <a href="{{ comment }}">еще</a>
-            {% else %}
-              {{ comment }}
-            {% endif %} -->
-
             {% if session['username'] == img.author.name or session['username'] ==  username %}
               <div class="_com _form_del">
                 <button class="_com_but_del" value="{{ comment }}" title="Удалить комментарий"><img src="/static/ico/_dcom.png"></button>
@@ -67,10 +60,9 @@
     <time class="_p29ma _6g6t5" title="{{img.created_time | datetime}}"> 
     {{moment(img.created_time).fromNow(refresh = True)}}</time></div>
     <section class="_km7ip _ti7l3">
-      <form class="_b6i0l" method="POST">
-        <textarea class="_bilrf" name="comment" placeholder="Добавьте комментарий..."></textarea>
-        <input type="submit" class="cl_bsend" value="Send">
-        <input type="hidden" name="id" value="{{ img._id }}">
+      <form class="_b6i0l">
+        <textarea class="_bilrf" placeholder="Добавьте комментарий..."></textarea>
+        <input type="button" class="_cl_bsend" value="Send">
       </form>
     </section>
   </div>

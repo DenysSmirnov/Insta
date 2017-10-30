@@ -8,10 +8,10 @@
           <div class="_l8yre _qdmzb">
           {% for data in userdata %}
             {% if data.name == session['username'] %}
-            <button id="_menu" class="_1frkc" title="Изменить фото профиля"><img alt="Изменить фото профиля" class="_fya1f" src="{{ resize_url + data.avatar }}" onclick="document.getElementById('up').click()"></button>
+            <button id="_menu" class="_1frkc" title="Изменить фото профиля" onclick="$('#up').click()"><img alt="Изменить фото профиля" class="_fya1f" src="{{ resize_url + data.avatar }}" ></button>
             <div>
               <form method="POST" enctype="multipart/form-data">
-                <input type="file" name="upload" class="_l8al6" id="up" onchange="document.getElementById('save').click()">
+                <input type="file" name="upload" class="_l8al6" id="up" onchange="$('#save').click()">
                 <input type="submit" value="Save" name="avatar" id="save">
               </form>
             </div>

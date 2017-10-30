@@ -1,9 +1,5 @@
 from core.other import *
-from core.model import (
-	get_users, get_images, get_following, follow, update_profile,
-	update_password, save_avatar, user_check_and_create, del_post,
-	del_comment
-)
+from core.model import *
 from flask import (
 	render_template, request, redirect, url_for, session, 
 	send_from_directory, flash, abort, current_app as app
@@ -140,6 +136,13 @@ def ajax():
 		name = request.form["ufol"]
 		data = follow(name)
 		return str(data)
+	elif request.form.get('addCom'):
+		comment = request.form['addCom'].strip()
+		if comment != '':
+			_id = request.form['comId']
+			add_comment(_id, comment)
+			return '1'
+		return ''
 	elif request.form.get('delPost'):
 		_id = request.form['delPost']
 		data = del_post(_id)
