@@ -40,7 +40,6 @@ class HerokuConfig(ProductionConfig):
 
 
 class DevelopmentConfig(Config):
-	# DEVELOPMENT = True
 	DEBUG = True
 	MONGO_DBNAME = 'yyy'
 	RESIZE_URL = ''

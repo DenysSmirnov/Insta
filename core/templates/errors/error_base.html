@@ -2,10 +2,9 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>Instagram</title>
+  <title>Insta</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-
 <body>
 <nav class="_68u16 _gft4l" role="navigation">
 <div class="_axuw9">
@@ -13,13 +12,14 @@
 <div class="_8na73 _kh1g4" >
 <div class="_5rnaq">
   <div class="_iraxg" >
-    <div class="_catib" ><a class="_8scx2" href="{{ url_for('.home') }}"><img style="width:85px" src="{{ url_for('static', filename='ico/logo.png') }}"></a></div>
+    <div class="_catib" ><a class="_8scx2" href="{{ url_for('.home') }}">
+      <img style="width:85px" src="{{ url_for('static', filename='ico/logo.png') }}"></a>
+    </div>
   </div>
-      <div class="_b28md"><a class="_art_head_2" href="{{ url_for('.user', username=session['username']) }}">{{ session['username'] }}</a></div>
-</div>
-</div>
-</div>
-</div>
+  <div class="_b28md"><a class="_art_head_2"
+    href="{{ url_for('.user', username=session['username']) }}">{{ session['username'] }}</a>
+  </div>
+</div></div></div></div>
 </nav>
 {% block main %}
 {% endblock %}

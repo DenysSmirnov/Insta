@@ -13,8 +13,7 @@
           {% endwith %}</span>
       </header>
     {% endif %}
-  {% block images %}
-      {# {% if images.count() > 3 %} #}
+    {% block images %}
       <div>
         <div class="col" id="ph123">
           {% for img in images %}
@@ -26,8 +25,8 @@
           {% endfor %}
         </div>
       </div>
-      {# {% endif %} #}
-  {% endblock %} 
+      <div id="loader2"><img src="/static/ico/animation.gif"></div>
+    {% endblock %} 
     </article>
   </main>
 </section>

@@ -1,4 +1,4 @@
-﻿$(function(){
+$(function(){
 var host = window.location.hostname,
     input = $('._avvq0');
 if (host === '127.0.0.1') {
@@ -7,16 +7,25 @@ if (host === '127.0.0.1') {
     var path = 'https://s3.us-east-2.amazonaws.com/insta-s3-bucket/upload/';
 }
 
+//Живой поиск "change keyup input click"
 input.on("input", function() {
   if (this.value.trim()) {  // .length >= 2
-    $.post("/search/", {'referal': this.value}
-    ).done(function(data) {
+    $.ajax({
+      url: '/search/',
+      type: 'POST', 
+      data: {'referal': this.value},
+      beforeSend: function(){
+        $("#loader_small").css("display", "block");
+      }
+    }).done(function(data) {
+      $("#loader_small").css("display", "");
       $("._h0otu").remove();
       $("._5ayw3, ._ohiyl").append("<div class='_h0otu'><div class='_9xy3k'></div><div class='_dv59m'><div class='_etpgz'></div></div></div>");
       if (!data) {
         $("._etpgz").empty().html("<div class='_oznku'>Ничего не найдено</div>");
       } else {
         var data = JSON.parse(data);
+        // console.log(data)
         $.each (data, function(i, item) {
           if (i===0) {
             $.each (item, function(index, img) {

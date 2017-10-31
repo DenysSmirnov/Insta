@@ -29,28 +29,34 @@ function fix_size(){
             }
             var marginx=(img.width()-container.width())/-2,
                 marginy=(img.height()-container.height())/-2;
-            // console.log(marginx);
             img.css({'margin-left': marginx, 'margin-top': marginy});  
         }
     }
 }
+
 $(window).on('resize', fix_size);
 fix_size();
 
 var inProgress = false,
     startFrom = $("#ph123:last a:eq(-1)")[0].search.split('=')[1];
     $(window).scroll(function() {
-        if ($(window).scrollTop() + $(window).height() >= $(document).height() - 200 && !inProgress){
+        if ($(window).scrollTop() + $(window).height() >= $(document).height() - 100 && !inProgress){
         $.ajax({
             url: window.location.href,
             method: 'POST',
             data: {"startFrom" : startFrom},
             beforeSend: function(){
-            inProgress = true;}
-            }).done(function(data){
-            img = JSON.parse(data);
-            if (img.length > 0) {
-                $.each(img, function(index, img) {
+                inProgress = true;
+                $("#loader2").css("display", "block");
+                $("#loader2").animate({"opacity": 1}, 500);
+            }
+        }).done(function(data){
+            var data = JSON.parse(data);
+            $("#loader2").animate({"opacity": 0}, 500, function(){
+                $("#loader2").css("display", "");
+            });
+            if (data.length > 0) {
+                $.each(data, function(index, img) {
                 photos = "<div class='img-container' style='margin-right: 4px;'><a href='/detail/?_id="+
                 img._id.$oid+"'><img src='"+path+img.path+"'></a></div>";
                 $("#ph123").append(photos);

@@ -1,5 +1,6 @@
 from flask import session, abort, current_app as app
 from bson.objectid import ObjectId
+# from bson.dbref import DBRef
 from .base import mongo
 
 def get_images(tag=None, _id=None, author=None,
@@ -167,7 +168,7 @@ def user_check_and_create(name, password):
 
 def search(exp):
 	data = mongo.db.users.find({ '$or': [{'name' : {'$regex': exp}},
-		{'fio' : {'$regex': exp+'|'+exp.title()}}]},
+		{'fio' : {'$regex': exp+'|'+exp.title()}}]}, # exp/i
 		{'name':1, 'fio':1, 'avatar':1, '_id':0})
 
 	data2 = mongo.db.images.find({'tags': {'$regex': exp}},

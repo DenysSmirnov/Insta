@@ -11,6 +11,7 @@ from flask import (
 	url_for, session, flash, abort, current_app as app
 )
 from datetime import datetime
+# from time import sleep
 from . import main
 from bson.json_util import dumps
 
@@ -73,6 +74,7 @@ def home():
 		elif request.form.get('startFrom'):
 			last_id = request.form['startFrom']
 			images = get_images(author_follow=names, last_id=last_id)
+			# sleep(1)
 			return dumps(images)
 	return render_template('home.html', images=images,
 		resize_url=resize_url)

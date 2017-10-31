@@ -153,5 +153,7 @@ def ajax():
 		data = del_comment(_id, comment)
 		return str(data)
 	else:
-		return dumps({'uname': session['username'],
-			'numPerPage': app.config['NUM_PER_PAGE_MAIN']})
+		data = {'uname': session['username'],
+			'numPerPage': app.config['NUM_PER_PAGE_MAIN'],
+			'uploadUrl': app.config['UPLOAD_URL']}
+		return dumps(data)

@@ -1,11 +1,4 @@
 $(document).ready(function() {
-var host = window.location.hostname;
-if (host === '127.0.0.1') {
-    var path = '/static/upload/resized-images/';
-} else {
-    var path = 'https://s3.us-east-2.amazonaws.com/insta-s3-bucket/upload/';
-}
-
 $.post('/ajax_/', function(data) {
 conf = JSON.parse(data);
 })
@@ -28,24 +21,30 @@ $('html').on('keyup','textarea', function() {
 if (window.location.pathname === '/') {
 $(window).scroll(function() {
     /* Если высота окна + высота прокрутки больше или равны высоте всего документа и ajax-запрос в настоящий момент не выполняется, то запускаем ajax-запрос */
-    if ($(window).scrollTop() + $(window).height() >= $(document).height() - 200 && !inProgress){
+    if ($(window).scrollTop() + $(window).height() >= $(document).height() - 100 && !inProgress){
     $.ajax({
         url: '/',
         type: 'POST',
         data: {"startFrom" : startFrom},
         beforeSend: function(){
-        inProgress = true;}
+            inProgress = true;
+            $("#loader").css("display", "block");
+            $("#loader").animate({"opacity": 1}, 500);
+        }
         }).done(function(data){
-        var img = JSON.parse(data);
-        if (img.length > 0) {
-            $.each(img, function(index, img) {
-            var articles = "<article class='_s5vjd _622au _5lms4 _8n9ix'><header class='_art_head'><a class='_4a6q9 _i2o1o _gvoze' href='/"+img.author.name+"/' style='width: 30px;height: 30px;'><img class='_rewi8' src='"+path+img.author.avatar+
-"'></a><div><a class='_art_head_2' href='/"+img.author.name+"/'>"+img.author.name+"</a><div>"+img.title+"</div></div>"+del_post_btn_if_author(img.author.name, img._id.$oid)+"</header><div><img src='"+path+img.path+"' width='600px'></div><div class='_art_foot'>"+
+        var data = JSON.parse(data);
+        $("#loader").animate({"opacity": 0}, 500, function(){
+            $("#loader").css("display", "");
+        });
+        if (data.length > 0) {
+            $.each(data, function(index, img) {
+            var article = "<article class='_s5vjd _622au _5lms4 _8n9ix'><header class='_art_head'><a class='_4a6q9 _i2o1o _gvoze' href='/"+img.author.name+"/' style='width: 30px;height: 30px;'><img class='_rewi8' src='"+conf.uploadUrl+img.author.avatar+
+"'></a><div><a class='_art_head_2' href='/"+img.author.name+"/'>"+img.author.name+"</a><div>"+img.title+"</div></div>"+del_post_btn_if_author(img.author.name, img._id.$oid)+"</header><div><img src='"+conf.uploadUrl+img.path+"' width='600px'></div><div class='_art_foot'>"+
 getLike(img.liked_users, img._id.$oid)+"<div class='_com _aut_com'><span>"+getTag(img.author.name, img.description, img.tags)+"</span></div><div><div class='_listcoms'>"+
 getCom(img.comments, img.author.name)+"</div><div class='_ha6c6 _6d44r'><time class='_p29ma _6g6t5' title='"+moment(img.created_time.$date).format('LL')+"'>"+moment(img.created_time.$date).fromNow()+
 "</time></div><section class='_km7ip _ti7l3'><form class='_b6i0l'><textarea class='_bilrf' placeholder='Добавьте комментарий...'></textarea><input type='button' class='_cl_bsend' value='Send'></form></section></div></article>";
             
-            $("#articles").append(articles);
+            $("#articles").append(article);
             inProgress = false;
             startFrom = img._id.$oid;
             })
@@ -127,8 +126,8 @@ item_target.hide().eq(0).before(link);
 }
 
 function add_comment(e) {
-let btn = $(e.target);
-let com = $(this).siblings('._bilrf').val(),
+let btn = $(e.target),
+    com = $(this).siblings('._bilrf').val(),
     id = $(this).closest(
         "._art_foot").find('._cl_but').val();
 if (com.trim() && !inProgress2) {
