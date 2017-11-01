@@ -24,9 +24,9 @@
             <button class="_qv64e _t78yp _4tgw8 _njrw0" name="edit">Редактировать профиль</button></a>
           {% else %}
               {% if session['username'] in user.followers %}
-                <input class="_qv64e _t78yp _4tgw8 _njrw0" name="follow" type="button" id="{{ user.name }}" value="Подписки">
+                <input class="_qv64e _t78yp _4tgw8 _njrw0" type="button" id="{{ user.name }}" value="Подписки">
               {% else %}
-                <input class="_qv64e _gexxb _4tgw8 _njrw0" name="follow" type="button" id="{{ user.name }}" value="Подписаться">
+                <input class="_qv64e _gexxb _4tgw8 _njrw0" type="button" id="{{ user.name }}" value="Подписаться">
               {% endif %}
           {% endif %}
         </span>

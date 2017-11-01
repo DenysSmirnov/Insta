@@ -5,6 +5,7 @@ from flask import (
 	send_from_directory, flash, abort, current_app as app
 )
 import os.path
+from datetime import datetime
 from werkzeug import secure_filename
 from bson.json_util import dumps
 from . import main
@@ -89,6 +90,42 @@ def change_password():
 			return redirect(url_for('.change_password'))
 		return redirect(url_for('main.login'))
 	return render_template('forms/change_password.html')
+
+@main.route('/add_post/', methods=['POST', 'GET'])
+@login_required
+def add_post():
+	if request.method == 'POST':
+		title = request.form['title']
+		description = request.form['description']
+		tags = request.form['tags'].split('#')
+		final_tags = ['#' + tag.strip() for tag in tags if tag]
+		img = request.files['upload']
+		if img and allowed_img(img.filename):
+			path = upload_img(img)
+			user = get_users(username=session['username'])
+			for item in user:
+				avatar = item['avatar']
+				_id = item['_id']
+			now = datetime.utcnow()
+			save({
+				'title': title,
+				'created_time': now,
+				'description': description,
+				'tags': final_tags,
+				'path': path,
+				'author': {
+					'name': session['username'],
+					'avatar': avatar,
+					'user_id': _id
+				},
+				'liked_users': []
+			})
+			return redirect(url_for('.home'))
+		elif not img:
+			flash('Необходимо выбрать фото!')
+		elif not allowed_img(img.filename):
+			flash("Допустимый формат фото: 'png', 'jpg'")
+	return render_template('forms/add_post.html')
 
 @main.route('/<username>/', methods=['POST', 'GET'])
 @login_required

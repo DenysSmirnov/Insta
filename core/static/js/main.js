@@ -154,7 +154,6 @@ $.ajax({
 function like(e) {
 var id = $(this).val();
 if (!inProgress2) {
-// console.log(id);
 $.ajax({
     url: '/',
     type: 'POST',
@@ -162,7 +161,6 @@ $.ajax({
     beforeSend: function(){
     inProgress2 = true;}
     }).done(function(data){
-console.log('передано: ', id);
     let btn = $(e.target).parent(); // all browsers
     if ( $('._cl_but').is(e.target) ) {
         btn = $(e.target);          // firefox
