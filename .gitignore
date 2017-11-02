@@ -2,6 +2,7 @@
 __pycache__
 instavenv/
 APP_SETTINGS.CFG
+Procfile
 .env
 upload/
 jquery-3.2.1.min.js
