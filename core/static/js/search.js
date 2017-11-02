@@ -26,9 +26,9 @@ input.on("input", function() {
       } else {
         var data = JSON.parse(data);
         // console.log(data)
-        $.each (data, function(i, item) {
+        $.each(data, function(i, item) {
           if (i===0) {
-            $.each (item, function(index, img) {
+            $.each(item, function(index, img) {
               var li = "<a class='_gimca' href='/"+img.name+"/'><div class='_t3f9x'><img class='_a4egj' src='"+path+img.avatar+
               "'><div class='_cuwjc'><div class='_ajwor'><span class='_sgi9z'>"+img.name+"</span></div>"+isFio(img.fio)+"</div></div></a>";
               $("._etpgz").append(li);
@@ -38,7 +38,7 @@ input.on("input", function() {
             var a = [];
             $.each (item, function(index, img) {
               $.each (img.tags, function(index, tag) {
-                if (tag.indexOf(input.val()) + 1) {
+                if (tag.indexOf(input.val().toLowerCase()) + 1) {
                   a.push(tag);
                 }
               })
