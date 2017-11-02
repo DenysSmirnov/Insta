@@ -97,8 +97,8 @@ def add_post():
 	if request.method == 'POST':
 		title = request.form['title']
 		description = request.form['description']
-		tags = request.form['tags'].split('#')
-		final_tags = ['#' + tag.strip() for tag in tags if tag]
+		tags = request.form['tags'].replace(' ', '#').split('#')
+		final_tags = ['#' + tag.strip().lower() for tag in tags if tag]
 		img = request.files['upload']
 		if img and allowed_img(img.filename):
 			path = upload_img(img)
