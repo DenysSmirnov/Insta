@@ -1,12 +1,10 @@
-# import os.path
-from core.model import get_users, get_images, add_like, search
+from core.model import get_users, get_images, search
 from core.other import login_required, text_is_valid
 from core.errors import page_not_found
 from flask import ( 
 	render_template, request, redirect, session,
 	send_from_directory, abort, current_app as app
 )
-# from time import sleep
 from . import main
 from bson.json_util import dumps
 
@@ -47,16 +45,10 @@ def home():
 		names = items['following']
 	names.append(session['username'])
 	images = get_images(author_follow=names)
-
 	if request.method == 'POST':
-		if request.form.get('like'):
-			_id = request.form['like']
-			data = add_like(_id)
-			return str(data)
-		elif request.form.get('startFrom'):
+		if request.form.get('startFrom'):
 			last_id = request.form['startFrom']
 			images = get_images(author_follow=names, last_id=last_id)
-			# sleep(1)
 			return dumps(images)
 	return render_template('home.html', images=images,
 		resize_url=resize_url)

@@ -169,28 +169,15 @@ def user_following(username):
 
 @main.route('/ajax_/', methods=['POST'])
 def ajax():
-	if request.form.get("ufol"):
-		name = request.form["ufol"]
-		data = follow(name)
+	functions = dict(ufol=follow, addCom=add_comment,
+		like=add_like, delPost=del_post, delCom=del_comment)
+	if request.form:
+		args = []
+		for key, value in dict(request.form).items():
+			args += value
+		data = functions[key](*args)
 		return str(data)
-	elif request.form.get('addCom'):
-		comment = request.form['addCom'].strip()
-		if comment != '':
-			_id = request.form['comId']
-			add_comment(_id, comment)
-			return '1'
-		return ''
-	elif request.form.get('delPost'):
-		_id = request.form['delPost']
-		data = del_post(_id)
-		return str(data)
-	elif request.form.get('delCom'):
-		comment = request.form['delCom']
-		_id = request.form['imgId']
-		data = del_comment(_id, comment)
-		return str(data)
-	else:
-		data = {'uname': session['username'],
-			'numPerPage': app.config['NUM_PER_PAGE_MAIN'],
-			'uploadUrl': app.config['UPLOAD_URL']}
-		return dumps(data)
+	data = dict(uname=session['username'],
+		numPerPage=app.config['NUM_PER_PAGE_MAIN'],
+		uploadUrl=app.config['UPLOAD_URL'])
+	return dumps(data)

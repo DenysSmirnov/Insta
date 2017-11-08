@@ -44,9 +44,9 @@
       <div class="_listcoms">
       {% for com_dict in img.comments %}
         {% for username, comment in com_dict.items() %}
-          <div class="_hdiv _com _aut_com"><a class="_art_head_2" href="{{ url_for('.user', username=username) }}">{{ username }}</a>
+          <div class="_hdiv _com _aut_com"><a class="_art_head_2" href="{{ url_for('.user', username=username) }}">{{ username}}</a>
             <span>{{ comment }}</span>
-            {% if session['username'] == img.author.name or session['username'] ==  username %}
+            {% if session['username'] == img.author.name or session['username'] == username %}
               <div class="_com _form_del">
                 <button class="_com_but_del" value="{{ comment }}" title="Удалить комментарий"><img src="/static/ico/_dcom.png"></button>
               </div>

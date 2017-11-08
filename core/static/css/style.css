@@ -1318,6 +1318,15 @@ a:focus {
     display: none;
     opacity: 0;
 }
+._nhglx {
+    color: #999;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 18px;
+    margin-bottom: 12px;
+    text-align: left;
+
+}
 
 @media (min-width: 414px){
 ._cepxb {
@@ -1435,6 +1444,10 @@ a:focus {
     margin: 0 auto;
     display: none;
     opacity: 0;
+}
+._nhglx {
+    margin-left: 4px;
+    margin-top: 40px;
 }
 }
 @media (max-width: 736px) {
@@ -1562,6 +1575,7 @@ a:focus {
     margin: 4px 0 0 4px;
     overflow: hidden;
 }
+}
 @media (min-width: 791px) {
 ._thumb img {
     margin-right: 22px;
@@ -1574,5 +1588,8 @@ a:focus {
     max-height: 282px;
     max-width: 282px;
     margin: 20px 0 0 20px;
+}
+._nhglx {
+    margin: 0 19px;
 }
 }

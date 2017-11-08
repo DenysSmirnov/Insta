@@ -20,8 +20,9 @@ $('html').on('keyup','textarea', function() {
 
 if (window.location.pathname === '/') {
 $(window).scroll(function() {
-    /* Если высота окна + высота прокрутки больше или равны высоте всего документа и ajax-запрос в настоящий момент не выполняется, то запускаем ajax-запрос */
-    if ($(window).scrollTop() + $(window).height() >= $(document).height() - 100 && !inProgress){
+    /* Если высота окна + высота прокрутки больше или равны высоте всего документа
+    и ajax-запрос в настоящий момент не выполняется, то запускаем ajax-запрос */
+    if ($(window).scrollTop() + $(window).height() >= $(document).height() - 200 && !inProgress){
     $.ajax({
         url: '/',
         type: 'POST',
@@ -38,12 +39,21 @@ $(window).scroll(function() {
         });
         if (data.length > 0) {
             $.each(data, function(index, img) {
-            var article = "<article class='_s5vjd _622au _5lms4 _8n9ix'><header class='_art_head'><a class='_4a6q9 _i2o1o _gvoze' href='/"+img.author.name+"/' style='width: 30px;height: 30px;'><img class='_rewi8' src='"+conf.uploadUrl+img.author.avatar+
-"'></a><div><a class='_art_head_2' href='/"+img.author.name+"/'>"+img.author.name+"</a><div>"+img.title+"</div></div>"+del_post_btn_if_author(img.author.name, img._id.$oid)+"</header><div><img src='"+conf.uploadUrl+img.path+"' width='600px'></div><div class='_art_foot'>"+
-getLike(img.liked_users, img._id.$oid)+"<div class='_com _aut_com'><span>"+getTag(img.author.name, img.description, img.tags)+"</span></div><div><div class='_listcoms'>"+
-getCom(img.comments, img.author.name)+"</div><div class='_ha6c6 _6d44r'><time class='_p29ma _6g6t5' title='"+moment(img.created_time.$date).format('LL')+"'>"+moment(img.created_time.$date).fromNow()+
-"</time></div><section class='_km7ip _ti7l3'><form class='_b6i0l'><textarea class='_bilrf' placeholder='Добавьте комментарий...'></textarea><input type='button' class='_cl_bsend' value='Send'></form></section></div></article>";
-            
+            var article = "<article class='_s5vjd _622au _5lms4 _8n9ix'>\
+<header class='_art_head'><a class='_4a6q9 _i2o1o _gvoze' href='/"+img.author.name+
+"/' style='width: 30px;height: 30px;'><img class='_rewi8' src='"+conf.uploadUrl+
+img.author.avatar+"'></a><div><a class='_art_head_2' href='/"+img.author.name+"/'>"+
+img.author.name+"</a><div>"+img.title+"</div></div>"+
+del_post_btn_if_author(img.author.name, img._id.$oid)+"</header><div><img src='"+conf.uploadUrl+
+img.path+"' width='600px'></div><div class='_art_foot'>"+getLike(img.liked_users, img._id.$oid)+
+"<div class='_com _aut_com'><span>"+getTag(img.author.name, img.description, img.tags)+
+"</span></div><div><div class='_listcoms'>"+getCom(img.comments, img.author.name)+
+"</div><div class='_ha6c6 _6d44r'><time class='_p29ma _6g6t5' title='"+
+moment(img.created_time.$date).format('LL')+"'>"+moment(img.created_time.$date).fromNow()+
+"</time></div><section class='_km7ip _ti7l3'><form class='_b6i0l'>\
+<textarea class='_bilrf' placeholder='Добавьте комментарий...'></textarea>\
+<input type='button' class='_cl_bsend' value='Send'></form></section></div></article>";
+
             $("#articles").append(article);
             inProgress = false;
             startFrom = img._id.$oid;
@@ -134,7 +144,7 @@ if (com.trim() && !inProgress2) {
 $.ajax({
     url: '/ajax_/',
     type: 'POST',
-    data: {"addCom": com, "comId": id},
+    data: {"comId": id, "addCom": com},
     beforeSend: function(){
     inProgress2 = true;}
     }).done(function(data){  
@@ -155,7 +165,7 @@ function like(e) {
 var id = $(this).val();
 if (!inProgress2) {
 $.ajax({
-    url: '/',
+    url: '/ajax_/',
     type: 'POST',
     data: {"like" : id},
     beforeSend: function(){
@@ -235,7 +245,7 @@ if (!inProgress2) {
 $.ajax({
     url: '/ajax_/',
     type: 'POST',
-    data: {"delCom": com, "imgId": id},
+    data: {"imgId": id, "delCom": com},
     beforeSend: function(){
     inProgress2 = true;}
     }).done(function(data){
