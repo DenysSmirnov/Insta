@@ -1,6 +1,5 @@
 from flask import session, abort, current_app as app
 from bson.objectid import ObjectId
-# from bson.dbref import DBRef
 from .base import mongo
 
 def get_images(tag=None, _id=None, author=None,

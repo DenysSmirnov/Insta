@@ -65,7 +65,6 @@ var inProgress = false,
                 })
             }})
         }
-        // $(window).on('resize', fix_size);
         fix_size();
     })
 })
