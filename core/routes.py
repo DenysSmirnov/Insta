@@ -3,7 +3,7 @@ from core.other import login_required, text_is_valid
 from core.errors import page_not_found
 from flask import ( 
 	render_template, request, redirect, session,
-	send_from_directory, abort, current_app as app
+	send_from_directory, abort
 )
 from . import main
 from bson.json_util import dumps
@@ -11,7 +11,6 @@ from bson.json_util import dumps
 @main.route('/explore/', methods=['POST', 'GET'])
 @login_required
 def explore():
-	resize_url = app.config['UPLOAD_URL']
 	tag = request.args.get('tag')
 	images = get_images(tag)
 	if request.method == 'POST':
@@ -19,13 +18,11 @@ def explore():
 			last_id = request.form['startFrom']
 			images = get_images(tag, last_id=last_id)
 			return dumps(images)
-	return render_template('explore.html', images=images,
-		tag=tag, resize_url=resize_url)
+	return render_template('explore.html', images=images,tag=tag)
 
 @main.route('/detail/')
 @login_required
 def detail():
-	resize_url = app.config['UPLOAD_URL']
 	_id = request.args.get('_id')
 	if _id and len(_id) == 24:
 		images = get_images(_id=_id)
@@ -33,13 +30,11 @@ def detail():
 			abort(404)
 	else:
 		abort(404)
-	return render_template('detail.html',
-		images=images, resize_url=resize_url)
+	return render_template('detail.html', images=images)
 
 @main.route('/', methods=['POST', 'GET'])
 @login_required
 def home():
-	resize_url = app.config['UPLOAD_URL']
 	user = get_users(session['username'])
 	for items in user:
 		names = items['following']
@@ -50,8 +45,7 @@ def home():
 			last_id = request.form['startFrom']
 			images = get_images(author_follow=names, last_id=last_id)
 			return dumps(images)
-	return render_template('home.html', images=images,
-		resize_url=resize_url)
+	return render_template('home.html', images=images)
 
 @main.route('/search/', methods=['POST'])
 def ajax_search():

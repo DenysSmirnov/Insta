@@ -7,7 +7,7 @@ import random
 import boto3
 
 def allowed_img(filename):
-	ALLOWED_EXTENSIONS = set(['png', 'jpg']) # , 'jpeg', 'tiff', 'bmp'
+	ALLOWED_EXTENSIONS = set(['png', 'jpg'])
 	return '.' in filename and \
 		filename.lower().rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
@@ -30,9 +30,6 @@ def upload_img(img, res='600', quality=95):
 		s3.meta.client.upload_file(
 		path, app.config['RESIZE_S3_BUCKET'], path)
 	resized_url = resize(path, res, quality=quality).rsplit('/', 1)[1]
-	# print('path: ', path)
-	# print('full_path: ', full_path)
-	# print('resized_url: ', resized_url)
 	return resized_url
 
 def login_required(f):
@@ -53,10 +50,3 @@ def text_is_valid(text):
 	if match:
 		return False
 	return True
-
-def format_datetime(value, format='medium'):
-	if format == 'full':
-		format="%Y-%m-%d %H:%M:%S"
-	elif format == 'medium':
-		format="%d %B %Y"
-	return value.strftime(format)

@@ -1,13 +1,14 @@
 from flask import Flask
 from flask_pymongo import PyMongo
 from flask_moment import Moment
-from core.other import format_datetime
-import flask_resize
 from config import config
+import flask_resize
+import locale
 
 moment = Moment()
 mongo = PyMongo()
 resize = flask_resize.Resize()
+locale.setlocale(locale.LC_ALL, '')
 
 def create_app(config_name):
     app = Flask(__name__)
@@ -20,6 +21,5 @@ def create_app(config_name):
 
     from . import main as main_blueprint
     app.register_blueprint(main_blueprint)
-    app.jinja_env.filters['datetime'] = format_datetime
 
     return app

@@ -130,7 +130,6 @@ def add_post():
 @main.route('/<username>/', methods=['POST', 'GET'])
 @login_required
 def user(username):
-	resize_url = app.config['UPLOAD_URL']
 	images = get_images(author=username)
 	userdata = get_users(username)
 	if images.count() == 0 and userdata.count() == 0:
@@ -151,21 +150,19 @@ def user(username):
 			images = get_images(author=username, last_id=last_id)
 			return dumps(images)
 	return render_template('user.html', images=images, userdata=userdata, \
-		user_image_count=user_image_count, resize_url=resize_url)
+		user_image_count=user_image_count)
 
 @main.route('/<username>/followers/')
 @login_required
 def user_followers(username):
-	resize_url = app.config['UPLOAD_URL']
 	users = get_following(username, 'followers')
-	return render_template('follow/followers.html', users=users, resize_url=resize_url)
+	return render_template('follow/followers.html', users=users)
 
 @main.route('/<username>/following/')
 @login_required
 def user_following(username):
-	resize_url = app.config['UPLOAD_URL']
 	users = get_following(username, 'following')
-	return render_template('follow/following.html', users=users, resize_url=resize_url)
+	return render_template('follow/following.html', users=users)
 
 @main.route('/ajax_/', methods=['POST'])
 def ajax():

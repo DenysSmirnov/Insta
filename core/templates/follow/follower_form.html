@@ -11,7 +11,7 @@
      <li class="_6e4x5">
       <div class="_npuc5">
         <div class="_f5wpw">
-         <a class="_4a6q9 _i2o1o _gvoze" href="{{ url_for('.user', username=user.name) }}" style="width: 30px;height: 30px;"><img class="_rewi8" src="{{ resize_url + user.avatar }}"></a>
+         <a class="_4a6q9 _i2o1o _gvoze" href="{{ url_for('.user', username=user.name) }}" style="width: 30px;height: 30px;"><img class="_rewi8" src="{{ config['UPLOAD_URL'] + user.avatar }}"></a>
          <div class="_eryrc">
           <div class="_2nunc"><a class="_art_head_2" href="{{ url_for('.user', username=user.name) }}">{{ user.name }}</a></div>
           <div class="_9mmn5">{{ user.fio }}</div>

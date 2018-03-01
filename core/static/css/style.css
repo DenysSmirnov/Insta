@@ -19,7 +19,7 @@ ol, ul {
     list-style: none;
 }
 li {
-display: list-item;
+    display: list-item;
     text-align: -webkit-match-parent;
 }
 body, button, input, textarea {
