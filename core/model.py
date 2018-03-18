@@ -89,6 +89,7 @@ def add_comment(_id, comment):
 		{'_id' : ObjectId(_id)},{'$addToSet': {
 		'comments' : {session['username']: comment}}}
 	)
+	return 1
 
 def del_comment(_id, comment):
 	mongo.db.images.update_one(
