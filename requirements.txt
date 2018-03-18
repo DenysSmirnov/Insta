@@ -19,7 +19,6 @@ pilkit==2.0
 Pillow==4.2.1
 pillowcase==2.0.0
 pymongo==3.5.1
-PIL
 python-dateutil==2.6.1
 pytz==2017.2
 s3transfer==0.1.11

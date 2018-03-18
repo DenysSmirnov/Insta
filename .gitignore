@@ -1,8 +1,9 @@
 *.pyc
 __pycache__
-instavenv/
+venv/
 APP_SETTINGS.CFG
 Procfile
 .env
 upload/
 jquery-3.2.1.min.js
+.idea/
