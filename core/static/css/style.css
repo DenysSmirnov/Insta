@@ -402,7 +402,7 @@ a:focus {
 ._bnq48 {
     font-size: 16px;
     margin-right: 40px;
-    display: inline;
+    /*display: inline;*/
 }
 ._8fi2q {
     -webkit-box-flex: 1;
@@ -540,13 +540,16 @@ a:focus {
 ._listcoms {overflow:hidden;}
 ._com {display:inline-block;}
 ._aut_com {
-    float:left;
+    float: left;
     margin-bottom: 4px;
 }
 ._like {
     margin-bottom: 4px;
 }
-._form_del {float:right;width:20px;}
+._form_del {
+    float: right;
+    /*width:20px;*/
+}
 
 ._622au {
     padding: 0;
@@ -1347,17 +1350,18 @@ a:focus {
 }
 }
 @media (min-width: 640px){
-._7g4gl, ._s5vjd {
-    margin-bottom: 60px;
-}
-}
-@media (min-width: 640px){
 ._7g4gl, ._cwgrh, ._nx5in, ._ouv75, ._psd08, ._s5vjd {
     background-color: #fff;
     border: 1px solid #e6e6e6;
     border-radius: 3px;
     margin-left: -1px;
     margin-right: -1px;
+}
+._bnq48 {
+    display: inline;
+}
+._7g4gl, ._s5vjd {
+    margin-bottom: 60px;
 }
 }
 @media (max-width: 735px){
@@ -1459,6 +1463,9 @@ a:focus {
     min-width: 108px;
     margin: 4px 0 0 4px;
     overflow: hidden;
+}
+.col {
+    padding-left: 3%;
 }
 }
 @media (min-width: 736px) {
