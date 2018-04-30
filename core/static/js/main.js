@@ -6,8 +6,9 @@
         html = $('html');
 
     let conf = $.post('/ajax_/', data => {
-        conf = JSON.parse(data);
-    });
+                conf = JSON.parse(data);
+                });
+
 
     class Post {
         constructor(img) {
@@ -106,7 +107,7 @@
             let result = "";
             if (this.desc.length > 0 || this.tags.length > 0) {
                 result = `<a class='_art_head_2' href='/${this.author}'>${this.author}</a> ${this.desc} `;
-                $.each(this.tags, function(i, tag) {
+                $.each(this.tags, (i, tag) => {
                     result = result.concat(`<span><a href='/explore/?tag=${encodeURIComponent(tag)}'>${tag}</a></span> `);
                 })
             }
@@ -115,20 +116,18 @@
         getCom() {
             let result = "",
                 btn_del = "";
-            for (let data in this.comments) {
-                let item = this.comments[data];
-                for (let key in item) {
-                    let value = item[key];
+            $.each(this.comments, (i, data) => {
+                $.each(data, (key, value) => {
                     if (conf.uname === key || conf.uname === this.author) {
                         btn_del = `<div class='_com _form_del'>
-                <button class='_com_but_del' value='${value}' title='Удалить комментарий'>
-                <img src='/static/ico/_dcom.png'></button></div>`;
+                    <button class='_com_but_del' value='${value}' title='Удалить комментарий'>
+                    <img src='/static/ico/_dcom.png'></button></div>`;
                     }
                     result = result.concat(`<div class='_hdiv _com _aut_com'>
-            <a class='_art_head_2' href='${key}'>${key}</a>
-            <span> ${value}</span>${btn_del}</div>`);
-                }
-            }
+                    <a class='_art_head_2' href='${key}'>${key}</a>
+                    <span> ${value}</span>${btn_del}</div>`);
+                })
+            })
             return result;
         }
         del_post_btn_if_author() {
@@ -153,6 +152,7 @@ ${moment(this.createdTime).fromNow()}</time></div>
 <section class='_km7ip _ti7l3'><form class='_b6i0l'>
 <textarea class='_bilrf' placeholder='Добавьте комментарий...'></textarea>
 <input type='button' class='_cl_bsend' value='Send'></form></section></div></article>`;
+
         }
 
     }
@@ -252,7 +252,7 @@ ${moment(this.createdTime).fromNow()}</time></div>
             $("#loader").css("display", "");
         });
         if (data.length > 0) {
-            $.each(data, function(index, img) {
+            $.each(data, (index, img) => {
                 let post = new Post(img);
                 let article = post.create();
                 $("#articles").append(article);
