@@ -2,8 +2,8 @@
     'use strict';
     let inProgress = false,
         startFrom = $("._cl_but:last")[0].value,
-        from = -1,
-        html = $('html');
+        from = -1;
+    const html = $('html');
 
     let conf = $.post('/ajax_/', data => {
                 conf = JSON.parse(data);
@@ -58,11 +58,7 @@
                         $("img", btn).attr("src", "/static/ico/heart_white.png");
                         c = parseInt(count.text()) - 1;
                     }
-                    if (c > 0) {
-                        count.html(c);
-                    } else {
-                        btn.siblings('._like').remove();
-                    }
+                    c > 0 ? count.html(c) : btn.siblings('._like').remove();
                     inProgress = false;
                 })
             }
@@ -135,7 +131,7 @@
                 return "<div class='_del_post'><div class='_com _form_del'><button class='_post_but_del' value='" +
                     this.id + "' title='Удалить публикацию'><img src='/static/ico/_dcom.png'></button></div></div>"
             }
-            return ''
+            return '';
         }
         create() {
             // create HTML for current post
@@ -159,9 +155,7 @@ ${moment(this.createdTime).fromNow()}</time></div>
 
     class Comment {
         static hideComments() {
-            let list = $('._listcoms').filter(function(index) {
-                return index > from;
-            });
+            let list = $('._listcoms').filter(index => index > from);
             list.each(function() {
                 let item = $(this).find('._hdiv');
                 let item_target = item.filter(function() {
